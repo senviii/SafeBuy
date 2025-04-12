@@ -69,11 +69,10 @@ Here’s a breakdown of key files and what they do:
 
 ## 🛠️ Installation
 
-1. Clone or [Download this repo](https://github.com/senviii/safebuy)
-2. Go to `chrome://extensions` (or `opera://extensions`)
-3. Enable **Developer Mode**
-4. Click **Load Unpacked**
-5. Select the folder where this project is saved
+1. Go to `chrome://extensions` (or `opera://extensions`)
+2. Enable **Developer Mode**
+3. Click **Load Unpacked**
+4. Select the folder where this project is saved
 
 You're all set! The SafeBuy icon will appear in your browser.
 
