@@ -82,14 +82,14 @@ Built with a vision to safeguard online users from digital frauds and scams.
 
 Made with 💙 by:
 
-- Saanvi Mahika ()  
+- Saanvi Mahika (https://github.com/senviii)  
 
 ---
 
 ## 📬 Contact
 
 📧 Email: sm9511@srmist.edu.in  
-🔗 [LinkedIn]()  
-🔗 [GitHub]()
+🔗 [LinkedIn](https://www.linkedin.com/in/saanvi-mahika-79366a2aa/)  
+🔗 [GitHub](https://github.com/senviii)
 
 ---
