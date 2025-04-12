@@ -34,12 +34,27 @@ Online scams are getting sneakier — from fake discounts and cloned shopping we
 
 ## 🧠 Tech Stack
 
-| Component         | Tech Used               |
-|------------------|-------------------------|
-| Browser Extension| JavaScript, Manifest v3 |
-| Phishing Detection | ML (Random Forest/XGBoost), Python |
-| UI               | HTML/CSS + Vanilla JS   |
-| Reports (Optional) | Firebase / MongoDB     |
+| Component            | Tech Used                       |
+|---------------------|----------------------------------|
+| Browser Extension    | JavaScript, Manifest v3          |
+| Phishing Detection   | ML (Random Forest/XGBoost), Python |
+| UI                   | HTML/CSS + Vanilla JS            |
+| Reports (Optional)   | Firebase / MongoDB               |
+
+---
+
+## 📁 Project Structure
+
+Here’s a breakdown of key files and what they do:
+
+| File/Folder      | Purpose                                               |
+|------------------|--------------------------------------------------------|
+| `popup.html`     | The extension popup UI shown when the icon is clicked |
+| `popup.js`       | JavaScript logic to analyze URLs and show trust score |
+| `manifest.json`  | Metadata + permissions config for the Chrome extension |
+| `.gitignore`     | Keeps the repo clean by ignoring unwanted files        |
+| `LICENSE`        | Open-source under the MIT license                      |
+| `README.md`      | You're reading it — complete overview & instructions   |
 
 ---
 
@@ -54,7 +69,7 @@ Online scams are getting sneakier — from fake discounts and cloned shopping we
 
 ## 🛠️ Installation
 
-1. Clone or [Download this repo](https://github.com/your-username/safebuy)
+1. Clone or [Download this repo](https://github.com/senviii/safebuy)
 2. Go to `chrome://extensions` (or `opera://extensions`)
 3. Enable **Developer Mode**
 4. Click **Load Unpacked**
@@ -92,3 +107,4 @@ Made with 💙 by:
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
+
