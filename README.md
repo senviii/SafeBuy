@@ -107,3 +107,8 @@ Made with 💙 by:
 
 This project is open source and available under the [MIT License](LICENSE).
 
+---
+
+### 🔖 Hashtags
+#AMUHACKS4.0 #CSSAMU #AMU
+
