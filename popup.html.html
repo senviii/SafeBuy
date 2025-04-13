@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SafeBuy Extension</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0a0a0a;
+      --accent: #e6007a;
+      --bg: #f5f6f7;
+      --box-bg: #ffffff;
+      --text: #1c1c1e;
+      --danger: #e53935;
+      --safe: #43a047;
+      --soft-border: rgba(0, 0, 0, 0.06);
+      --shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      --input-border: #ccc;
+    }
+
+    [data-theme="dark"] {
+      --primary: #ffffff;
+      --accent: #ff70c0;
+      --bg: #1c1c1e;
+      --box-bg: #2c2c2e;
+      --text: #f2f2f7;
+      --soft-border: rgba(255, 255, 255, 0.1);
+      --shadow: 0 20px 40px rgba(255, 255, 255, 0.05);
+      --input-border: #666;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 1.5rem;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    .fade {
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .wrapper {
+      background-color: var(--box-bg);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 420px;
+      border: 1px solid var(--soft-border);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .wrapper:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    input[type="text"] {
+      padding: 14px 18px;
+      font-size: 15px;
+      border: 1px solid var(--input-border);
+      border-radius: 14px;
+      background-color: var(--box-bg);
+      color: var(--text);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(230, 0, 122, 0.2);
+    }
+
+    button {
+      padding: 12px;
+      background-color: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      font-size: 15px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    button:hover {
+      background-color: var(--accent);
+      transform: scale(1.02);
+    }
+
+    .result {
+      margin-top: 1rem;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .safe {
+      color: var(--safe);
+    }
+
+    .danger {
+      color: var(--danger);
+    }
+
+    .loading {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid var(--accent);
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-top: 1rem;
+    }
+
+    .footer {
+      margin-top: 2rem;
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .toggle-theme {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="fade">
+  <button class="toggle-theme" onclick="toggleTheme()">🌓 Toggle Theme</button>
+  <div class="wrapper fade">
+    <h1>🛡️ SafeBuy Smart Scanner</h1>
+    <div class="input-group">
+      <input type="text" id="urlInput" placeholder="Paste a shopping link" />
+      <button onclick="checkURL()">Check for Scam</button>
+    </div>
+    <div id="result" class="result"></div>
+    <div id="spinner" class="loading" style="display:none;"></div>
+  </div>
+  <div class="footer">
+    🚀 <a href="https://chrome.google.com/webstore" target="_blank">Add SafeBuy to Chrome</a>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute("data-theme");
+      document.documentElement.setAttribute("data-theme", current === "dark" ? "light" : "dark");
+    }
+
+    function checkURL() {
+      const url = document.getElementById("urlInput").value.trim();
+      const resultDiv = document.getElementById("result");
+      const spinner = document.getElementById("spinner");
+
+      if (!url) {
+        resultDiv.textContent = "❗ Please enter a URL to scan.";
+        resultDiv.className = "result danger fade";
+        return;
+      }
+
+      const redFlags = [
+        "login", "signin", "secure", "account", "update", "verify", "bank", "paypal", "payment", 
+        "free", "bonus", "deal", "offer", "gift", "coupon", "discount", "%", "cashback", 
+        "bit.ly", "tinyurl", "goo.gl", "rb.gy", ".ru", ".tk", ".ml", ".cf", ".gq", 
+        "suspicious", "unusual", "important", "immediate", "alert", "credentials", "reset",
+        "store-clone", "checkout", "prize", "0auth", "auth", "epay", "safepay", "wallet",
+        "redirect", "tracking", "phishing", "spoof", "fakeshop", "cheapbrand", "login-confirmation"
+      ];
+
+      const flagged = redFlags.some(flag => url.toLowerCase().includes(flag));
+
+      resultDiv.textContent = "";
+      spinner.style.display = "inline-block";
+
+      setTimeout(() => {
+        spinner.style.display = "none";
+        if (flagged) {
+          resultDiv.textContent = "⚠️ Suspicious URL detected! Be cautious.";
+          resultDiv.className = "result danger fade";
+        } else {
+          resultDiv.textContent = "✅ This site appears safe.";
+          resultDiv.className = "result safe fade";
+        }
+      }, 1500);
+    }
+  </script>
+</body>
+</html>
