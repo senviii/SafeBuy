@@ -1,240 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SafeBuy Extension</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeBuy – Shop Smart, Shop Safe</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&amp;display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #0a0a0a;
-      --accent: #e6007a;
-      --bg: #f5f6f7;
-      --box-bg: #ffffff;
-      --text: #1c1c1e;
-      --danger: #e53935;
-      --safe: #43a047;
-      --soft-border: rgba(0, 0, 0, 0.06);
-      --shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-      --input-border: #ccc;
-    }
-
-    [data-theme="dark"] {
-      --primary: #ffffff;
-      --accent: #ff70c0;
-      --bg: #1c1c1e;
-      --box-bg: #2c2c2e;
-      --text: #f2f2f7;
-      --soft-border: rgba(255, 255, 255, 0.1);
-      --shadow: 0 20px 40px rgba(255, 255, 255, 0.05);
-      --input-border: #666;
+      --primary: #7f5af0;
+      --accent: #ff69b4;
+      --bg: #f9f9ff;
+      --text: #333;
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      font-family: 'DM Sans', sans-serif;
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg);
+      background: var(--bg);
       color: var(--text);
+    }
+
+    header {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
-      padding: 1.5rem;
-      transition: background-color 0.5s ease, color 0.5s ease;
+      padding: 2rem 4rem;
+      background-color: white;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
     }
 
-    .fade {
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(10px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .wrapper {
-      background-color: var(--box-bg);
-      padding: 2rem;
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-      width: 100%;
-      max-width: 420px;
-      border: 1px solid var(--soft-border);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .wrapper:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
-    }
-
-    h1 {
-      font-size: 28px;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 1.5rem;
+    .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
       color: var(--primary);
     }
 
-    .input-group {
+    nav a {
+      margin-left: 2rem;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .hero {
+      padding: 6rem 4rem;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(to right, #ffeef8, #f2f0ff);
     }
 
-    input[type="text"] {
-      padding: 14px 18px;
-      font-size: 15px;
-      border: 1px solid var(--input-border);
-      border-radius: 14px;
-      background-color: var(--box-bg);
-      color: var(--text);
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
     }
 
-    input[type="text"]:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(230, 0, 122, 0.2);
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin-bottom: 2rem;
     }
 
-    button {
-      padding: 12px;
-      background-color: var(--primary);
-      color: #fff;
-      font-weight: 600;
-      font-size: 15px;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
-    button:hover {
+    .cta-button {
       background-color: var(--accent);
-      transform: scale(1.02);
-    }
-
-    .result {
-      margin-top: 1rem;
-      font-size: 14px;
-      font-weight: 500;
-      text-align: center;
-    }
-
-    .safe {
-      color: var(--safe);
-    }
-
-    .danger {
-      color: var(--danger);
-    }
-
-    .loading {
-      display: inline-block;
-      width: 24px;
-      height: 24px;
-      border: 3px solid var(--accent);
-      border-top-color: transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-top: 1rem;
-    }
-
-    .footer {
-      margin-top: 2rem;
-      font-size: 12px;
-      color: #666;
-      text-align: center;
-    }
-
-    .footer a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .toggle-theme {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: none;
+      color: white;
+      padding: 1rem 2rem;
       border: none;
-      color: var(--accent);
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: bold;
       cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .cta-button:hover {
+      background-color: #ff3399;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      padding: 4rem;
+    }
+
+    .feature {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+
+    .feature h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .feature p {
+      color: #555;
+    }
+
+    .url-check {
+      padding: 4rem;
+      text-align: center;
+      background-color: white;
+    }
+
+    .url-check h2 {
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .url-check input[type="text"] {
+      padding: 0.75rem 1rem;
+      width: 60%;
+      max-width: 400px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .url-check button {
+      padding: 0.75rem 1.5rem;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      margin-left: 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .url-check #result {
+      margin-top: 1rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    footer {
+      background-color: white;
+      padding: 2rem;
+      text-align: center;
+      color: #999;
     }
   </style>
-</head>
-<body class="fade">
-  <button class="toggle-theme" onclick="toggleTheme()">🌓 Toggle Theme</button>
-  <div class="wrapper fade">
-    <h1>🛡️ SafeBuy Smart Scanner</h1>
-    <div class="input-group">
-      <input type="text" id="urlInput" placeholder="Paste a shopping link" />
-      <button onclick="checkURL()">Check for Scam</button>
+<style type="text/css" id="operaUserStyle"></style></head>
+<body>
+  <header>
+    <div class="logo">SafeBuy</div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#demo">Try It</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Shop Smart. Shop Safe.</h1>
+    <p>
+      SafeBuy is your personal browser bodyguard, detecting suspicious shopping websites
+      and phishing scams in real time — so you can browse worry-free.
+    </p>
+    <button class="cta-button">Add to Chrome</button>
+  </section>
+
+  <section class="features" id="features">
+    <div class="feature">
+      <h3>Real-Time Detection</h3>
+      <p>Scans websites instantly for phishing patterns and scam signals using AI.</p>
     </div>
-    <div id="result" class="result"></div>
-    <div id="spinner" class="loading" style="display:none;"></div>
-  </div>
-  <div class="footer">
-    🚀 <a href="https://chrome.google.com/webstore" target="_blank">Add SafeBuy to Chrome</a>
-  </div>
+    <div class="feature">
+      <h3>Lightweight &amp; Fast</h3>
+      <p>Runs in the background without slowing down your browsing.</p>
+    </div>
+    <div class="feature">
+      <h3>Beautiful Interface</h3>
+      <p>Sleek, minimal design built for modern users with care and color.</p>
+    </div>
+  </section>
+
+  <section class="url-check" id="demo">
+    <h2>Try It Live</h2>
+    <input type="text" id="urlInput" placeholder="Enter a URL to check">
+    <button onclick="checkURL()">Check</button>
+    <div id="result" style="color: green;">✅ This site looks safe!</div>
+  </section>
+
+  <footer>
+    © 2025 SafeBuy. Designed with love. ✨
+  </footer>
 
   <script>
-    function toggleTheme() {
-      const current = document.documentElement.getAttribute("data-theme");
-      document.documentElement.setAttribute("data-theme", current === "dark" ? "light" : "dark");
-    }
-
     function checkURL() {
-      const url = document.getElementById("urlInput").value.trim();
-      const resultDiv = document.getElementById("result");
-      const spinner = document.getElementById("spinner");
-
+      const url = document.getElementById('urlInput').value;
+      const result = document.getElementById('result');
       if (!url) {
-        resultDiv.textContent = "❗ Please enter a URL to scan.";
-        resultDiv.className = "result danger fade";
-        return;
+        result.textContent = 'Please enter a URL';
+        result.style.color = 'gray';
+      } else if (url.includes("phishy") || url.includes("scam")) {
+        result.textContent = '🚨 Suspicious website detected!';
+        result.style.color = 'red';
+      } else {
+        result.textContent = '✅ This site looks safe!';
+        result.style.color = 'green';
       }
-
-      const redFlags = [
-        "login", "signin", "secure", "account", "update", "verify", "bank", "paypal", "payment", 
-        "free", "bonus", "deal", "offer", "gift", "coupon", "discount", "%", "cashback", 
-        "bit.ly", "tinyurl", "goo.gl", "rb.gy", ".ru", ".tk", ".ml", ".cf", ".gq", 
-        "suspicious", "unusual", "important", "immediate", "alert", "credentials", "reset",
-        "store-clone", "checkout", "prize", "0auth", "auth", "epay", "safepay", "wallet",
-        "redirect", "tracking", "phishing", "spoof", "fakeshop", "cheapbrand", "login-confirmation"
-      ];
-
-      const flagged = redFlags.some(flag => url.toLowerCase().includes(flag));
-
-      resultDiv.textContent = "";
-      spinner.style.display = "inline-block";
-
-      setTimeout(() => {
-        spinner.style.display = "none";
-        if (flagged) {
-          resultDiv.textContent = "⚠️ Suspicious URL detected! Be cautious.";
-          resultDiv.className = "result danger fade";
-        } else {
-          resultDiv.textContent = "✅ This site appears safe.";
-          resultDiv.className = "result safe fade";
-        }
-      }, 1500);
     }
   </script>
-</body>
-</html>
+
+</body></html>
