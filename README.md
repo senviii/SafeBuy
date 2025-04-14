@@ -12,6 +12,18 @@ Online scams are getting sneakier — from fake discounts and cloned shopping we
 
 ---
 
+## 💡 Why a Browser Extension?
+
+Unlike standalone apps or websites that require manual input, **SafeBuy** works directly inside your browser — meaning:
+
+- It runs silently in the background as you browse any website.
+- Scans pages in real-time without interrupting your flow.
+- Gives instant feedback right when you need it — no copy-pasting URLs or switching tabs.
+
+This makes SafeBuy not just useful, but effortlessly integrated into your day-to-day browsing. It's like having a security system that’s always on, without even noticing it.
+
+---
+
 ## 🚀 Features
 
 - 🔗 **Phishing & Clone Site Detection**  
@@ -111,4 +123,3 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ### 🔖 Hashtags
 #AMUHACKS4.0 #CSSAMU #AMU
-
